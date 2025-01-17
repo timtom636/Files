@@ -8,6 +8,50 @@ namespace Files.App.Helpers
 		private static ILayoutSettingsService LayoutSettingsService { get; } = Ioc.Default.GetRequiredService<ILayoutSettingsService>();
 
 		/// <summary>
+		/// Gets the desired icon size for the requested layout
+		/// </summary>
+		/// <param name="folderLayoutMode"></param>
+		/// <returns></returns>
+		public static uint GetIconSize(FolderLayoutModes folderLayoutMode)
+		{
+			return folderLayoutMode switch
+			{
+				// Details
+				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Compact => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Small => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Medium => 20,
+				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Large => 24,
+				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
+
+				// List
+				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Compact => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Small => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Medium => 20,
+				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Large => 24,
+				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
+
+				// Columns
+				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Compact => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Small => Constants.ShellIconSizes.Small,
+				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Medium => 20,
+				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Large => 24,
+				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
+
+				// Card
+				FolderLayoutModes.CardView when LayoutSettingsService.CardViewSize == CardsViewSizeKind.Small => 64,
+				FolderLayoutModes.CardView when LayoutSettingsService.CardViewSize == CardsViewSizeKind.Medium => 64,
+				FolderLayoutModes.CardView when LayoutSettingsService.CardViewSize == CardsViewSizeKind.Large => 80,
+				FolderLayoutModes.CardView when LayoutSettingsService.CardViewSize == CardsViewSizeKind.ExtraLarge => 96,
+
+				// Grid
+				FolderLayoutModes.GridView when LayoutSettingsService.GridViewSize <= GridViewSizeKind.Small => 96,
+				FolderLayoutModes.GridView when LayoutSettingsService.GridViewSize <= GridViewSizeKind.Large => 128,
+
+				_ => 256,
+			};
+		}
+
+		/// <summary>
 		/// Gets the desired height for items in the Details View
 		/// </summary>
 		/// <param name="detailsViewSizeKind"></param>
@@ -94,45 +138,6 @@ namespace Files.App.Helpers
 		}
 
 		/// <summary>
-		/// Gets the desired icon size for the requested layout
-		/// </summary>
-		/// <param name="folderLayoutMode"></param>
-		/// <returns></returns>
-		public static uint GetIconSize(FolderLayoutModes folderLayoutMode)
-		{
-			return folderLayoutMode switch
-			{
-				// Details
-				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Compact => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Small => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Medium => 20,
-				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Large => 24,
-				FolderLayoutModes.DetailsView when LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
-
-				// List
-				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Compact => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Small => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Medium => 20,
-				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.Large => 24,
-				FolderLayoutModes.ListView when LayoutSettingsService.ListViewSize == ListViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
-
-				// Columns
-				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Compact => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Small => Constants.ShellIconSizes.Small,
-				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Medium => 20,
-				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Large => 24,
-				FolderLayoutModes.ColumnView when LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.ExtraLarge => Constants.ShellIconSizes.Large,
-
-				// Grid and Tiles
-				FolderLayoutModes.GridView when LayoutSettingsService.GridViewSize <= GridViewSizeKind.Small => 96,
-				FolderLayoutModes.GridView when LayoutSettingsService.GridViewSize <= GridViewSizeKind.Large => 128,
-				FolderLayoutModes.TilesView => 96,
-
-				_ => 256,
-			};
-		}
-
-		/// <summary>
 		/// Gets the desired height for items in the Columns View
 		/// </summary>
 		/// <param name="columnsViewSizeKind"></param>
@@ -157,13 +162,69 @@ namespace Files.App.Helpers
 		}
 
 		/// <summary>
-		/// Gets the desired width for items in the Tiles View
+		/// Gets the desired width for items in the Cards View
 		/// </summary>
-		/// <param name="tilesViewSizeKind"></param>
+		/// <param name="cardsViewSizeKind"></param>
 		/// <returns></returns>
-		public static int GetTilesViewItemWidth(TilesViewSizeKind tilesViewSizeKind)
+		public static int GetCardsViewItemWidth(CardsViewSizeKind cardsViewSizeKind)
 		{
-			return 260;
+			switch (cardsViewSizeKind)
+			{
+				case CardsViewSizeKind.Small:
+					return 300;
+				case CardsViewSizeKind.Medium:
+					return 200;
+				case CardsViewSizeKind.Large:
+					return 240;
+				case CardsViewSizeKind.ExtraLarge:
+					return 260;
+				default:
+					return 300;
+			}
+		}
+
+		/// <summary>
+		/// Gets the desired height for the Icon Box in the Cards View
+		/// </summary>
+		/// <param name="columnsViewSizeKind"></param>
+		/// <returns></returns>
+		public static int GetCardsViewIconBoxHeight(CardsViewSizeKind cardsViewSizeKind)
+		{
+			switch (cardsViewSizeKind)
+			{
+				case CardsViewSizeKind.Small:
+					return 128;
+				case CardsViewSizeKind.Medium:
+					return 111;
+				case CardsViewSizeKind.Large:
+					return 128;
+				case CardsViewSizeKind.ExtraLarge:
+					return 160;
+				default:
+					return 128;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the desired width for the Icon Box in the Cards View
+		/// </summary>
+		/// <param name="columnsViewSizeKind"></param>
+		/// <returns></returns>
+		public static int GetCardsViewIconBoxWidth(CardsViewSizeKind cardsViewSizeKind)
+		{
+			switch (cardsViewSizeKind)
+			{
+				case CardsViewSizeKind.Small:
+					return 128;
+				case CardsViewSizeKind.Medium:
+					return 200;
+				case CardsViewSizeKind.Large:
+					return 240;
+				case CardsViewSizeKind.ExtraLarge:
+					return 260;
+				default:
+					return 128;
+			}
 		}
 	}
 }

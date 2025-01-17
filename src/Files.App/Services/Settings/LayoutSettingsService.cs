@@ -307,9 +307,9 @@ namespace Files.App.Services.Settings
 			set => Set(value);
 		}
 
-		public TilesViewSizeKind TilesViewSize
+		public CardsViewSizeKind CardViewSize
 		{
-			get => Get(TilesViewSizeKind.Small);
+			get => Get(CardsViewSizeKind.Small);
 			set => Set(value);
 		}
 

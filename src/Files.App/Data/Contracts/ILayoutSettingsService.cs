@@ -206,9 +206,9 @@ namespace Files.App.Data.Contracts
 		ListViewSizeKind ListViewSize { get; set; }
 
 		/// <summary>
-		/// Item size in the Tiles View
+		/// Item size in the Card View
 		/// </summary>
-		TilesViewSizeKind TilesViewSize { get; set; }
+		CardsViewSizeKind CardViewSize { get; set; }
 
 		/// <summary>
 		/// Item size in the Grid View

@@ -16,9 +16,9 @@ namespace Files.App.Data.Enums
 		ListView = 1,
 
 		/// <summary>
-		/// Tiles view 
+		/// Card view 
 		/// </summary>
-		TilesView = 2,
+		CardView = 2,
 
 		/// <summary>
 		/// Column view 

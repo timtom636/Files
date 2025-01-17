@@ -251,6 +251,7 @@ namespace Files.App.ViewModels.UserControls
 				case nameof(UserSettingsService.LayoutSettingsService.DetailsViewSize):
 				case nameof(UserSettingsService.LayoutSettingsService.ListViewSize):
 				case nameof(UserSettingsService.LayoutSettingsService.ColumnsViewSize):
+				case nameof(UserSettingsService.LayoutSettingsService.CardViewSize):
 				case nameof(UserSettingsService.LayoutSettingsService.GridViewSize):
 					OnPropertyChanged(nameof(IsLayoutSizeCompact));
 					OnPropertyChanged(nameof(IsLayoutSizeSmall));
@@ -992,12 +993,12 @@ namespace Files.App.ViewModels.UserControls
 					LayoutThemedIcon = instanceViewModel.FolderSettings.LayoutMode switch
 					{
 						FolderLayoutModes.ListView => Commands.LayoutList.ThemedIconStyle!,
-						FolderLayoutModes.TilesView => Commands.LayoutTiles.ThemedIconStyle!,
+						FolderLayoutModes.CardView => Commands.LayoutCards.ThemedIconStyle!,
 						FolderLayoutModes.ColumnView => Commands.LayoutColumns.ThemedIconStyle!,
 						FolderLayoutModes.GridView => Commands.LayoutGrid.ThemedIconStyle!,
 						_ => Commands.LayoutDetails.ThemedIconStyle!
 					};
-					OnPropertyChanged(nameof(IsTilesLayout));
+					OnPropertyChanged(nameof(IsCardsLayout));
 					OnPropertyChanged(nameof(IsListLayout));
 					OnPropertyChanged(nameof(IsColumnLayout));
 					OnPropertyChanged(nameof(IsGridLayout));
@@ -1055,7 +1056,7 @@ namespace Files.App.ViewModels.UserControls
 		public bool IsInfFile => SelectedItems is not null && SelectedItems.Count == 1 && FileExtensionHelpers.IsInfFile(SelectedItems.First().FileExtension) && !InstanceViewModel.IsPageTypeRecycleBin;
 		public bool IsFont => SelectedItems is not null && SelectedItems.Any() && SelectedItems.All(x => FileExtensionHelpers.IsFontFile(x.FileExtension)) && !InstanceViewModel.IsPageTypeRecycleBin;
 
-		public bool IsTilesLayout => instanceViewModel.FolderSettings.LayoutMode is FolderLayoutModes.TilesView;
+		public bool IsCardsLayout => instanceViewModel.FolderSettings.LayoutMode is FolderLayoutModes.CardView;
 		public bool IsColumnLayout => instanceViewModel.FolderSettings.LayoutMode is FolderLayoutModes.ColumnView;
 		public bool IsGridLayout => instanceViewModel.FolderSettings.LayoutMode is FolderLayoutModes.GridView;
 		public bool IsDetailsLayout => instanceViewModel.FolderSettings.LayoutMode is FolderLayoutModes.DetailsView;
@@ -1070,24 +1071,28 @@ namespace Files.App.ViewModels.UserControls
 			(IsDetailsLayout && UserSettingsService.LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Small) ||
 			(IsListLayout && UserSettingsService.LayoutSettingsService.ListViewSize == ListViewSizeKind.Small) ||
 			(IsColumnLayout && UserSettingsService.LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Small) ||
+			(IsCardsLayout && UserSettingsService.LayoutSettingsService.CardViewSize == CardsViewSizeKind.Small) ||
 			(IsGridLayout && UserSettingsService.LayoutSettingsService.GridViewSize == GridViewSizeKind.Small);
 
 		public bool IsLayoutSizeMedium =>
 			(IsDetailsLayout && UserSettingsService.LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Medium) ||
 			(IsListLayout && UserSettingsService.LayoutSettingsService.ListViewSize == ListViewSizeKind.Medium) ||
 			(IsColumnLayout && UserSettingsService.LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Medium) ||
+			(IsCardsLayout && UserSettingsService.LayoutSettingsService.CardViewSize == CardsViewSizeKind.Medium) ||
 			(IsGridLayout && UserSettingsService.LayoutSettingsService.GridViewSize == GridViewSizeKind.Medium);
 
 		public bool IsLayoutSizeLarge =>
 			(IsDetailsLayout && UserSettingsService.LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.Large) ||
 			(IsListLayout && UserSettingsService.LayoutSettingsService.ListViewSize == ListViewSizeKind.Large) ||
 			(IsColumnLayout && UserSettingsService.LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.Large) ||
+			(IsCardsLayout && UserSettingsService.LayoutSettingsService.CardViewSize == CardsViewSizeKind.Large) ||
 			(IsGridLayout && UserSettingsService.LayoutSettingsService.GridViewSize == GridViewSizeKind.Large);
 
 		public bool IsLayoutSizeExtraLarge =>
 			(IsDetailsLayout && UserSettingsService.LayoutSettingsService.DetailsViewSize == DetailsViewSizeKind.ExtraLarge) ||
 			(IsListLayout && UserSettingsService.LayoutSettingsService.ListViewSize == ListViewSizeKind.ExtraLarge) ||
 			(IsColumnLayout && UserSettingsService.LayoutSettingsService.ColumnsViewSize == ColumnsViewSizeKind.ExtraLarge) ||
+			(IsCardsLayout && UserSettingsService.LayoutSettingsService.CardViewSize == CardsViewSizeKind.ExtraLarge) ||
 			(IsGridLayout && UserSettingsService.LayoutSettingsService.GridViewSize == GridViewSizeKind.ExtraLarge);
 
 		public string ExtractToText
