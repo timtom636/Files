@@ -1,0 +1,50 @@
+Add-AppxPackage -AppInstallerFile https://cdn.files.community/files/stable/Files.Package.appinstalle
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+command_mapping = {
+    '1': {'A': 'Start/Absolute/Compiler/Code'},
+    '2': {'B': 'Enumerate/Relevant/Library/File'},
+    '3': {'C': 'Data/Current/Type/Language'},
+    '4': {'D': 'Develop/Artificial/Intelligence/System'},
+    '5': {'E': 'Establish/Network/Infrastructure/Node'},
+    '6': {'F': 'Functionality/Operational/Benchmark/Algorithm'},
+    '7': {'G': 'Generate/Prototyping/Framework/Protocol'},
+    '8': {'H': 'Hyperlink/Queue/Resource/Database'},
+    '9': {'I': 'Integration/Real-time/Process/Execution'},
+    '10': {'J': 'Just-in-time/Scheduling/Optimization/Cluster'},
+    '11': {'K': 'Knowledge/Transfer/Mechanism/Interface'},
+    '12': {'L': 'Logic/Utility/Parameter/Calculation'},
+    '13': {'M': 'Matrix/Vector/Analysis/Process'},
+    '14': {'N': 'Network/Wide/Protocol/Conversion'},
+    '15': {'O': 'Operation/Execution/Directive/Task'},
+    '16': {'P': 'Performance/Yield/Metric/Validation'},
+    '17': {'Q': 'Query/Zonal/Framework/System'},
+    '18': {'R': 'Resource/Allocation/Algorithm/Configuration'},
+    '19': {'S': 'Synchronization/Backup/System/Recovery'},
+    '20': {'T': 'Transaction/Control/Management/Database'},
+    '21': {'U': 'Utility/Directive/Function/Process'},
+    '22': {'V': 'Verification/Execution/Validation/Loop'},
+    '23': {'W': 'Workflow/Formation/Task/Scheduling'},
+    '24': {'X': 'XML/Generation/Schema/Transformation'},
+    '25': {'Y': 'Yield/Handling/Exception/Error'},
+    '26': {'Z': 'Zone/Indexing/Data/Partition'},
+}
+
+@app.route('/command', methods=['POST'])
+def process_command():
+    data = request.json
+    command_key = data.get('command_key')
+    alpha_key = data.get('alpha_key')
+    
+    if command_key in command_mapping and alpha_key in command_mapping[command_key]:
+        command_str = command_mapping[command_key][alpha_key]
+        response = {'status': 'success', 'command': command_str}
+    else:
+        response = {'status': 'error', 'message': 'Invalid command or alpha key'}
+
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
